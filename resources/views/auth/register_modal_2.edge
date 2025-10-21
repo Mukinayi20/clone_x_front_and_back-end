@@ -1,0 +1,10 @@
+@let(title = 'login')
+@include('partials/header')
+<section class="register_contenair" id="modal_register">
+    <form class="style_modal" action="" method="post">
+        {{ csrfField() }}
+        @!component('component/input', { name: 'password', placeholder: 'votre mot de passe' })
+        @!component('component/btn_submit', { name: "S'inscrire" })
+    </form>
+</section>
+@include('partials/footer')

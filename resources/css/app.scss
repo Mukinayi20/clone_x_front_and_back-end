@@ -1,0 +1,120 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/variables-dark';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html,
+body {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+$font_palette: 'Fira Sans', sans-serif;
+$btn-primary-hover: #efefef;
+$main-bg: #212529 !default;
+$main-bg-secondary-opacity: 0.89;
+$main-bg-secondary: rgba(33, 37, 41, $main-bg-secondary-opacity);
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: $font_palette;
+}
+
+.bg-main {
+  background-color: $main-bg !important;
+  color: white !important;
+}
+
+// *********************** Gestion de style btn *********************
+$btn_primary: (
+  height: 2rem,
+  width: 15rem,
+  'font-family': $font_palette,
+);
+
+.border_btn_primary {
+  @each $prop, $val in $btn_primary {
+    #{$prop}: $val;
+  }
+}
+
+.btn_primary {
+  @extend .bg-white;
+  @extend .border_btn_primary;
+  @extend .border;
+  @extend .border-secondary-subtle;
+  @extend .rounded-pill;
+  color: #212529;
+  text-decoration: none;
+
+  &:hover {
+    background-color: $btn-primary-hover !important;
+    transition: background-color 0.3s ease;
+  }
+}
+.btn_secondary {
+  @extend .bg-main;
+  @extend .border_btn_primary;
+  //@extend .border;
+  //@extend .border-secondary-subtle;
+  @extend .rounded-pill;
+
+  &:hover {
+    background-color: $main-bg-secondary !important;
+    transition: background-color 0.3s ease !important;
+  }
+}
+
+// ********************** Gestion style input ***********************
+
+$input_stl: (
+  height: 3rem,
+  width: 20rem,
+  'font-family': $font_palette,
+);
+
+.input {
+  @each $prop, $val in $input_stl {
+    #{$prop}: $val;
+  }
+}
+
+.input {
+  @extend .border;
+  @extend .rounded;
+  @extend .input;
+}
+
+// ************************ Gestion de style pour different modal ******************************
+
+.register_contenair {
+  width: 100vw;
+  height: 100vh;
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+}
+
+.style_modal {
+  width: 35rem;
+  height: 40rem;
+  padding: 4rem;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .justify-content-around;
+}
+
+// ******************* Gestion de style pour les dates ***************************
+
+.date_contenaire {
+  @extend .d-flex;
+  @extend .flex-row;
+  @extend .gap-3;
+}

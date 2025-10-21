@@ -1,0 +1,23 @@
+@let(title = 'connexion')
+@include('partials/header')
+
+
+<h1>Ça commence maintenant</h1>
+<small>Inscrivez vous</small>
+<div>
+    @!component('component/button_primary', { name: "S'inscrir avec Googl" })
+    @!component('component/button_primary', { name: "S'inscrire avec Apple" })
+    <small>Ou</small>
+    @!component('component/button_primary', { myClass: 'btn_secondary', name: "créer un compte", btn: 'open_modal', link: route('auth.register') })
+</div>
+
+<p>
+    En vous inscrivant, vous acceptez les <a href="#">Conditions d'utilisation</a> et la <a href="#">Politique de confidentialité</a>, notamment l'<a href="#">Utilisation des cookies.</a>
+</p>
+
+<small>Vous avez déjà un compte?</small>
+<div class="">
+    @!component('component/button_primary', { name: "Se conncter" })
+    @!component('component/button_primary', { name: "Télécharger Grok" })
+</div>
+@include('partials/footer')
