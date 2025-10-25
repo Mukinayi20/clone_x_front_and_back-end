@@ -50,7 +50,7 @@
     "sass": "^1.93.2",
     "ts-node-maintained": "^10.9.5",
     "typescript": "~5.8",
-    "vite": "^6.3.5"
+    "vite": "^6.4.1"
   },
   "dependencies": {
     "@adocasts.com/generate-models": "^0.1.0-4.dev",
