@@ -1,6 +1,28 @@
-@let(title = 'register')
+@let(title = 'connexion')
 @include('partials/header')
+<section class="register_contenair" id="modal_register">
 
-<h1>connectez-vous à X</h1>
+        <form class="stl_modal_login" action="" method="post">
+            {{ csrfField() }}
+            <h1>connectez-vous à X</h1>
+            <div class="" style="">
+
+                @!component('component/button_primary', { name: "Se connecter avec google", myClass: 'login_btn' })
+                @!component('component/button_primary', { name: "Se connecter avec apple", myClass: 'login_btn' })
+                <div class="">
+                    <small>Ou</small>
+                </div>
+                
+            </div>
+                
+                @!component('component/input', { name: 'Email', placeholder: 'Adresse email', label: 'Email' })
+
+                @!component('component/btn_submit', { name: 'Suivant' })
+
+                @!component('component/button_primary', { name: "Mot de passe oublier ?", cls: 'login' })
+            
+            <a href="{{ route('auth.register') }}">S'inscrire</a>
+        </form>
+</section>
     
 @include('partials/footer')

@@ -1,16 +1,17 @@
+@let(title = 'connexion')
 @include('partials/header')
 <section class="register_contenair" id="modal_register">
 
         <form class="style_modal" action="" method="post">
             {{ csrfField() }}
             <div class="">
-                @!component('component/input', { name: 'fullName', placeholder: 'Nom et prénom' })
-                @!component('component/input', { type: 'email', name: 'email', placeholder: 'Email' })
+                @!component('component/input', { name: 'fullName', placeholder: 'Nom et prénom', label: 'fullName' })
+                @!component('component/input', { type: 'email', name: 'email', placeholder: 'Email', label: 'email' })
                 <a href="#">Utiliser un téléphone</a>
             </div>
             <div>
                 <p>
-                    Cette information ne sera pas affichée publiquement. Confirmez votre âge, même si ce compte est pour une entreprise, un animal de compagnie ouautre chose.
+                    Cette information ne sera pas affichée publiquement. Confirmez votre âge, même si ce compte est pour une entreprise, un animal de compagnie ou autre chose.
                 </p>
                 @include('partials/register_date')
             </div>

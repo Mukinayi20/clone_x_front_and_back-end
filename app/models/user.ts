@@ -59,7 +59,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare anneeCreation: unknown
 
   @column()
-  declare adresse: string
+  declare adresse: string | null
 
   @column()
   declare webSite: string | null
@@ -69,6 +69,15 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column()
   declare idCommentaire: number | null
+
+  @column()
+  declare verification_token: string | null
+
+  @column()
+  declare token_expires_at: string | null
+
+  @column()
+  declare verified: boolean | null
 
   @hasMany(() => Follow, { foreignKey: 'idFollowers' })
   declare followers: HasMany<typeof Follow>

@@ -1,5 +1,5 @@
 @each(key in ['success', 'error'])
-  @if(flashMessages.has(key))
+  @if(flashMessages && flashMessages.has(key))
     <div class="alert alert-{{ key == 'success' ? 'success' : 'danger' }}">
       {{ flashMessages.get(key) }}
     </div>

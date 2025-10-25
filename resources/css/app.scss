@@ -72,6 +72,41 @@ $btn_primary: (
   }
 }
 
+.login_btn {
+  @extend .mw-100;
+  height: 2.2rem;
+  @extend .bg-white;
+  @extend .border_btn_primary;
+  @extend .border;
+  @extend .border-secondary-subtle;
+  @extend .rounded-pill;
+  color: #212529;
+  text-decoration: none;
+
+  &:hover {
+    background-color: $btn-primary-hover !important;
+    transition: background-color 0.3s ease;
+  }
+}
+
+.login {
+  @extend .fw-bolder;
+  @extend .mw-100;
+  height: 2.2rem;
+  @extend .bg-white;
+  @extend .border_btn_primary;
+  @extend .border;
+  @extend .border-secondary-subtle;
+  @extend .rounded-pill;
+  color: #212529;
+  text-decoration: none;
+
+  &:hover {
+    background-color: $btn-primary-hover !important;
+    transition: background-color 0.3s ease;
+  }
+}
+
 // ********************** Gestion style input ***********************
 
 $input_stl: (
@@ -104,6 +139,24 @@ $input_stl: (
 
 .style_modal {
   width: 35rem;
+  height: 40rem;
+  padding: 4rem;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .justify-content-around;
+}
+
+.style_modal_key {
+  width: 35rem;
+  height: 20rem;
+  padding: 4rem;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .justify-content-around;
+}
+
+.stl_modal_login {
+  width: 30rem;
   height: 40rem;
   padding: 4rem;
   @extend .d-flex;

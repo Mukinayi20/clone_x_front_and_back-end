@@ -24,5 +24,3 @@ monthNames.forEach((month, index) => {
   option.textContent = month
   mois.appendChild(option)
 })
-
-
