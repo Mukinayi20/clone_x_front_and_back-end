@@ -1,5 +1,27 @@
 @include('partials/header')
-
-<h1>I work !</h1>
-    
+<div class="container">
+  <div class="row">
+    <div class="col-3 text-end d-flex flex-column" style="gap: 3rem; margin-top: 0.5rem;">
+        <div class="d-flex flex-column">
+            @!component('component/nav_bar_home', { name: 'Accueil' })
+            @!component('component/nav_bar_home', { name: 'Signet' })
+            @!component('component/nav_bar_home', { name: 'Grok' })
+            @!component('component/nav_bar_home', { name: 'Profil' })
+        </div>
+        <button type="button" class="btn_nav_dark">Poster</button>
+        @!component('component/btn_profil', { name: 'Arsène Mukinayi', username: ' @AMukinayi8543', avatar: '/images/twitter(1).png', icon: '/images/points.png' })
+    </div>
+    <div class="col" style="margin-top: 0.5rem;">
+      <div class="d-flex flex-row justify-content-around">
+        @!component('component/nav_bar_home', { name: 'Pour vous' })
+        @!component('component/nav_bar_home', { name: 'Abonnement' })
+      </div>
+    </div>
+    <div class="col">
+        <div class="container_section3">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+        </div>
+    </div>
+  </div>
+</div>
 @include('partials/footer')

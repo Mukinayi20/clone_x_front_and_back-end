@@ -14,6 +14,9 @@ body {
   height: 100%;
   width: 100%;
 }
+a {
+  text-decoration: none;
+}
 
 $font_palette: 'Fira Sans', sans-serif;
 $btn-primary-hover: #efefef;
@@ -34,8 +37,8 @@ $main-bg-secondary: rgba(33, 37, 41, $main-bg-secondary-opacity);
 
 // *********************** Gestion de style btn *********************
 $btn_primary: (
-  height: 2rem,
-  width: 15rem,
+  height: 2.4rem,
+  width: 17rem,
   'font-family': $font_palette,
 );
 
@@ -49,7 +52,7 @@ $btn_primary: (
   @extend .bg-white;
   @extend .border_btn_primary;
   @extend .border;
-  @extend .border-secondary-subtle;
+  //@extend .border-secondary-subtle;
   @extend .rounded-pill;
   color: #212529;
   text-decoration: none;
@@ -74,7 +77,8 @@ $btn_primary: (
 
 .login_btn {
   @extend .mw-100;
-  height: 2.2rem;
+  height: 2.5rem;
+  width: 20rem;
   @extend .bg-white;
   @extend .border_btn_primary;
   @extend .border;
@@ -147,11 +151,12 @@ $input_stl: (
 }
 
 .style_modal_key {
-  width: 35rem;
-  height: 20rem;
+  width: 40rem;
+  height: 50rem;
   padding: 4rem;
   @extend .d-flex;
   @extend .flex-column;
+  @extend .align-items-center;
   @extend .justify-content-around;
 }
 
@@ -170,4 +175,137 @@ $input_stl: (
   @extend .d-flex;
   @extend .flex-row;
   @extend .gap-3;
+}
+
+// ****************** Gestion de style pour la page d'acceuil ********************
+
+.contenaire_acceuil {
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+}
+.contenaire_acceuil_logo {
+  width: 50%;
+  height: 95vh;
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+}
+.contenaire_acceuil_contenu {
+  width: 50%;
+  height: 95vh;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .justify-content-around;
+}
+
+.acceuil_contenu_title_h1 {
+  width: 40rem;
+  font-size: 4.5rem;
+  @extend .fw-bold;
+}
+
+.acceuil_contenu_titre_h2 {
+  font-size: 2rem;
+  @extend .fw-bold;
+}
+
+.acceuil_contenu_section1 {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .justify-content-around;
+}
+
+.acceuil_contenu_parent_s1 {
+  margin-top: 0.7rem;
+  margin-bottom: 0.9rem;
+  height: 11rem;
+  @extend .d-flex;
+}
+.acceuil_contenu_parent_s2 {
+  height: 6.2rem;
+  @extend .d-flex;
+}
+
+// ****************** Gestion de style pour la page login ********************
+
+.login_contenu_parent_s1 {
+  margin-top: 0.7rem;
+  margin-bottom: 0.9rem;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .justify-content-between;
+  gap: 1rem;
+}
+
+.login_contenu_section1 {
+  text-align: center;
+  height: 13rem;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .justify-content-between;
+  @extend .align-items-center;
+}
+
+.login_contenu_section2 {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .align-items-center;
+  gap: 1rem;
+}
+$input_stl_login: (
+  height: 3rem,
+  width: 20rem,
+  'font-family': $font_palette,
+);
+
+.login_input {
+  @each $prop, $val in $input_stl_login {
+    #{$prop}: $val;
+  }
+}
+
+.login_contenu_input {
+  @extend .login_input;
+  @extend .border;
+  @extend .rounded;
+  @extend .form-control;
+}
+
+.login_contenu_input_password {
+  @extend .form-control;
+  @extend .login_input;
+  @extend .border;
+  @extend .rounded;
+  width: 20rem;
+}
+
+.login_modal_password {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .align-items-center;
+}
+
+.login_contenair_password {
+  @extend .d-flex;
+  @extend .flex-column;
+}
+
+// Page d'accueil navigation
+
+.btn_nav {
+  @extend .btn;
+  @extend .btn-outline-light;
+  color: black;
+  border: none;
+}
+
+.btn_nav_dark {
+  @extend .btn;
+  @extend .btn-dark;
+  border: none;
+}
+.container_section3 {
+  width: 20rem;
+  margin-top: 0.5rem;
 }

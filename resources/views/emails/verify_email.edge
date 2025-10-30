@@ -1,12 +1,9 @@
 @include('partials/header')
 
-<p>Bonjour {{ user.prenom }},</p>
-
-<p>Merci de vous être inscrit ! Cliquez sur le lien ci-dessous pour vérifier votre adresse e-mail :</p>
-
-<a href="{{ route('auth.verify', { token: user.verification_token }) }}">
-  Vérifier mon e-mail
-</a>
-
+<p style="font-family: Arial, sans-serif; color: #333;">
+  Bonjour {{ user.prenom }}<br><br>
+  Merci de vous être inscrit ! Cliquez sur le lien ci-dessous pour vérifier votre adresse e-mail 👇
+</p>
+    <a href= "{{ user.url }}">confirmer</a>
 <p>Ce lien expirera dans 24 heures.</p>
 @include('partials/footer')

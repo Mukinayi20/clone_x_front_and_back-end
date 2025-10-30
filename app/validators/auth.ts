@@ -1,5 +1,7 @@
 import vine from '@vinejs/vine'
 
+// Validation register step1
+
 export const registerValidatorstep1 = vine.compile(
   vine.object({
     fullName: vine.string().trim().minLength(2),
@@ -17,6 +19,8 @@ export const registerValidatorstep1 = vine.compile(
   })
 )
 
+// Validation register step2
+
 export const registerValidatorstep2 = vine.compile(
   vine.object({
     password: vine.string().minLength(6),
@@ -24,11 +28,15 @@ export const registerValidatorstep2 = vine.compile(
   })
 )
 
+// Validation login step1
+
 export const loginValidatorstep1 = vine.compile(
   vine.object({
     email: vine.string().email().minLength(3),
   })
 )
+
+// Validation login step2
 
 export const loginValidatorstep2 = vine.compile(
   vine.object({

@@ -1,0 +1,34 @@
+@let(title = 'connexion')
+@include('partials/header')
+<div class="contenaire_acceuil">
+    <div class="contenaire_acceuil_logo">
+        <img style="width: 35%;" src="/resources/views/icone/twitter(1).png" alt="">
+    </div>
+
+    <div class="acceuil_acceuil_contenu">
+        <h1 class="acceuil_contenu_title_h1">Ça commence maintenant</h1>
+        <small class="acceuil_contenu_titre_h2">Inscrivez vous.</small>
+
+        <div class="acceuil_contenu_parent_s1">
+            <div class="acceuil_contenu_section1">
+                @!component('component/button_primary', { name: "S'inscrir avec Googl" })
+                @!component('component/button_primary', { name: "S'inscrire avec Apple" })
+                <small>Ou</small>
+                @!component('component/button_primary', { myClass: 'btn_secondary', name: "créer un compte", btn: 'open_modal', link: route('auth.register') })
+            </div>
+        </div>
+        
+        <p style="width: 20rem; font-size:small;">
+            En vous inscrivant, vous acceptez les <a href="#">Conditions d'utilisation</a> et la <a href="#">Politique de confidentialité</a>, notamment l'<a href="#">Utilisation des cookies.</a>
+        </p>
+        
+        <p>Vous avez déjà un compte?</p>
+        <div class="acceuil_contenu_parent_s2">
+            <div class="acceuil_contenu_section1">
+                @!component('component/button_primary', { name: "Se conncter", link: route('auth.login.email') })
+                @!component('component/button_primary', { name: "Télécharger Grok" })
+            </div>
+        </div>
+    </div>
+</div>
+@include('partials/footer')

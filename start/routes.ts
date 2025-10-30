@@ -15,15 +15,15 @@ router.on('/').render('pages/home').as('home')
 // Vue modal login step1 email
 router
   .get('/login-email', async ({ view }) => {
-    return view.render('auth/login_modal')
+    return view.render('auth/login_step1')
   })
-  .as('auth.login')
+  .as('auth.login.email')
 // Vue modal login step2 password
 router
   .get('/login-password', async ({ view }) => {
     return view.render('auth/login_step2')
   })
-  .as('auth.login2')
+  .as('auth.login.password')
 // Vue modal register step1
 router
   .get('/register', ({ view }) => {
@@ -39,17 +39,22 @@ router
 // Vue page de connexion
 router
   .get('/connexion', ({ view }) => {
-    return view.render('auth/home_connexion')
+    return view.render('auth/connexion')
   })
   .as('home_connexion')
 // La route pour la validation de l'inscription par email
-router
-  .get('/verify-email', ({ view }) => {
-    return view.render('emails/verify_email')
-  })
-  .as('auth.verify')
 
+router.get('/verifyEmail', [RegistersController, 'verifyEmail']).as('auth.verify.email')
+
+// Page d'atente de la confirmation par email
+router
+  .get('wait_mail', ({ view }) => {
+    return view.render('emails/send_email')
+  })
+  .as('wait.validate.mail')
 router.post('/register', [RegistersController, 'handleregister'])
 router.post('/register/step2', [RegistersController, 'handleregister2'])
-router.post('/login', [RegistersController, 'handleloginCheckEmail'])
+router.post('/login-email', [RegistersController, 'handleloginCheckEmail'])
 router.post('/login-password', [RegistersController, 'handleloginCheckpassword'])
+
+// {{ user.prenom }},
