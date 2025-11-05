@@ -1,0 +1,89 @@
+<div  id="open-modale-edite-profil" style="display: none;">
+    <form action="/update-profil" method="post" enctype="multipart/form-data" class="modal-edite-profil">
+    {{ csrfField() }}
+        <div class="modal-edite-contente">
+            <div class="d-flex justify-content-between align-items-center">
+                <div style="gap: 2.5rem;" class="d-flex align-items-center">
+                    @include('component/btn_fermer')
+                    <p class="fw-bolder">
+                        Éditer le profil
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-outline-info">Enrégistrer</button>
+            </div>
+            <div style="position: relative;">
+                <div  class="bg-body-secondary rounded" style="height: 10rem;">
+                    <img id="image-couverture" class="mh-100" style="width: 100%; object-fit: cover;" src="#" alt="">
+                </div>
+                <div class="bg-body-secondary border border-white rounded-circle position-absolute border-3" style="height: 7rem; width: 7rem; position: absolute; top: 100px; left: 10px;">
+                    <img style="height: 7rem; width: 7rem;" class="border border-white rounded-circle" id="image-profil" src="#" alt="">
+                </div>
+            </div>
+            <div class="form-floating" style="margin-top: 2.4rem;">
+                <input type="text" class="form-control" name="fullname" id="floatingInputValue" placeholder="name@example.com" value="{{ user.prenom }} {{ user.nom }}">
+                <label for="floatingInputValue">Fullname</label>
+            </div>
+
+            <div class="input-group">
+                <input name="profil" type="file" class="form-control" accept="image/*" id="avatar-profil" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                <small class="btn" id="inputGroupFileAddon04">Photo de profil</small>
+            </div>
+
+            <div class="input-group">
+                <input name="couverture" type="file" class="form-control" accept="image/*" id="avatr-couverture" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                <small class="btn" id="inputGroupFileAddon04">Photo de couverture</small>
+            </div>
+
+            <div class="form-floating">
+                <textarea name="bio" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Bio</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input name="location" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Location</label>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+        const inputFileProfil = document.getElementById('avatar-profil')
+        const inputFileCouverture = document.getElementById('avatr-couverture')
+        const previewImageProfil = document.getElementById('image-profil')
+        const previewImageCouverture = document.getElementById('image-couverture')
+
+        inputFileProfil.addEventListener('change', (event) => {
+            const file = event.target.files[0]
+
+            if (file) {
+            const reader = new FileReader()
+
+            reader.onload = (e) => {
+                previewImageProfil.src = e.target.result
+                previewImageProfil.style.display = 'block'
+            }
+
+            reader.readAsDataURL(file)
+            } else {
+            previewImageProfil.src = ''
+            previewImageProfil.style.display = 'none'
+            }
+        })
+        inputFileCouverture.addEventListener('change', (event) => {
+            const file = event.target.files[0]
+
+            if (file) {
+            const reader = new FileReader()
+
+            reader.onload = (e) => {
+                previewImageCouverture.src = e.target.result
+                previewImageCouverture.style.display = 'block'
+            }
+
+            reader.readAsDataURL(file)
+            } else {
+            previewImageCouverture.src = ''
+            previewImageCouverture.style.display = 'none'
+            }
+        })
+</script>

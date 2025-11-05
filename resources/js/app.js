@@ -1,4 +1,4 @@
-import '../css/app.scss'
+
 
 const Jours = document.getElementById('jour')
 const mois = document.getElementById('mois')
@@ -24,3 +24,11 @@ monthNames.forEach((month, index) => {
   option.textContent = month
   mois.appendChild(option)
 })
+
+const modalElement = document.getElementById('staticBackdrop')
+const modal = new bootstrap.Modal(modalElement, {
+  backdrop: 'static',
+  keyboard: false 
+})
+modal.show()
+modal.hide()

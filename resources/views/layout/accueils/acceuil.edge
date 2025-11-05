@@ -1,0 +1,32 @@
+<div style="display: none;" id="page-accueil">
+    <div class="d-flex flex-row justify-content-around">
+        @!component('component/nav_bar_home', { name: 'Pour vous', id: 'pour-vous' })
+        @!component('component/nav_bar_home', { name: 'Abonnement', id: 'abonnement' })
+    </div>
+    <div>
+        @include('layout/accueils/pour_vous')
+        @include('layout/accueils/abonnement')
+    </div>
+</div>
+
+<script>
+    
+    const btnPourVous = document.getElementById('pour-vous')
+    const btnAbonnement = document.getElementById('abonnement')
+
+    const pagePourVous = document.getElementById('page_pour-vous')
+    const pageAbonnement = document.getElementById('page_abonnement')
+
+    let currentPage = pagePourVous
+      currentPage.style.display = 'block'
+
+      function openPage(page) {
+          if(!page || page === currentPage) return
+          currentPage.style.display = 'none'
+          page.style.display = 'block'
+          currentPage = page
+      }
+    btnPourVous.addEventListener('click', () => openPage(pagePourVous))
+    btnAbonnement.addEventListener('click', () => openPage(pageAbonnement))
+    
+</script>

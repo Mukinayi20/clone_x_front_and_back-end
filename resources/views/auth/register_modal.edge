@@ -2,7 +2,7 @@
 @include('partials/header')
 <section class="register_contenair" id="modal_register">
 
-        <form class="style_modal" action="" method="post">
+        <form class="style_modal" action="" method="post" enctype="multipart/form-data">
             {{ csrfField() }}
             <div class="">
                 @!component('component/input', { name: 'fullName', placeholder: 'Nom et prénom', label: 'fullName' })

@@ -1,27 +1,72 @@
 @include('partials/header')
 <div class="container">
-  <div class="row">
-    <div class="col-3 text-end d-flex flex-column" style="gap: 3rem; margin-top: 0.5rem;">
+  <div class="row gap-3">
+    <div class="col-3 text-end d-flex flex-column align-items-center border border-info-dark border-top-0 rounded" style="gap: 3rem; margin-top: 0.5rem;">
         <div class="d-flex flex-column">
-            @!component('component/nav_bar_home', { name: 'Accueil' })
-            @!component('component/nav_bar_home', { name: 'Signet' })
-            @!component('component/nav_bar_home', { name: 'Grok' })
-            @!component('component/nav_bar_home', { name: 'Profil' })
+            @!component('component/nav_bar_home', { name: 'Accueil', id: 'btn-accueil' })
+            @!component('component/nav_bar_home', { name: 'Signet', id: 'btn-signet' })
+            @!component('component/nav_bar_home', { name: 'Grok', id: 'btn-grok' })
+            @!component('component/nav_bar_home', { name: 'Profil', id: 'btn-profil'})
         </div>
         <button type="button" class="btn_nav_dark">Poster</button>
+        <button type="button" class="btn_nav_danger" data-bs-target="#staticBackdrop" data-bs-toggle="modal">Deconnexion</button>
+        @include('component/card_deconnexion')
         @!component('component/btn_profil', { name: 'Arsène Mukinayi', username: ' @AMukinayi8543', avatar: '/images/twitter(1).png', icon: '/images/points.png' })
     </div>
-    <div class="col" style="margin-top: 0.5rem;">
-      <div class="d-flex flex-row justify-content-around">
-        @!component('component/nav_bar_home', { name: 'Pour vous' })
-        @!component('component/nav_bar_home', { name: 'Abonnement' })
-      </div>
+    <div class="col border border-info-dark border-top-0 rounded" style="margin-top: 0.5rem;">
+      @include('layout/accueils/acceuil')
+      @include('layout/signet')
+      @include('layout/grok')
+      @include('layout/profils/profil')
     </div>
     <div class="col">
-        <div class="container_section3">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+      <div class="container_section3">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+      </div>
+      <div class="container_section3_suggetion">
+        <h4 style="padding-left: 1rem; padding-top: 0.5rem;">Suggetion</h4>
+        @!component('component/btn_profil', { name: 'Arsène Mukinayi', username: ' @AMukinayi8543', avatar: '/images/twitter(1).png', icon: '/images/points.png' })
+        @!component('component/btn_profil', { name: 'Arsène Mukinayi', username: ' @AMukinayi8543', avatar: '/images/twitter(1).png', icon: '/images/points.png' })
+        @!component('component/btn_profil', { name: 'Arsène Mukinayi', username: ' @AMukinayi8543', avatar: '/images/twitter(1).png', icon: '/images/points.png' })
+        <div class="col" style="margin-top: 0.5rem;">
+          <div class="d-flex flex-row justify-content-around">
+            @!component('component/nav_bar_home', { name: 'Plus', id: 'plusdesuggetion' })
+          </div>
         </div>
-    </div>
+      </div>
   </div>
 </div>
+
 @include('partials/footer')
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+      function openPage (page) {
+          page.style.display = 'block'
+      }
+
+      const btnAccueil = document.getElementById('btn-accueil')
+      const btnsignet = document.getElementById('btn-signet')
+      const BtnGrok = document.getElementById('btn-grok')
+      const BtnProfil = document.getElementById('btn-profil')
+
+      const pageAccueil = document.getElementById('page-accueil')
+      const pageGrok = document.getElementById('grok-page')
+      const pageSignet = document.getElementById('signet-page')
+      const pageprofil = document.getElementById('profil-page')
+
+      let currentPage = pageAccueil
+      currentPage.style.display = 'block'
+
+      function openPage(page) {
+          if(!page || page === currentPage) return
+          currentPage.style.display = 'none'
+          page.style.display = 'block'
+          currentPage = page
+      }
+      btnAccueil.addEventListener('click', () => openPage(pageAccueil))
+      btnsignet.addEventListener('click', () => openPage(pageSignet))
+      BtnGrok.addEventListener('click', () => openPage(pageGrok))
+      BtnProfil.addEventListener('click', () => openPage(pageprofil))
+  })
+</script>

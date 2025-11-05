@@ -2,7 +2,7 @@
 @include('partials/header')
 <section class="register_contenair" id="modal_register">
 
-        <form class="stl_modal_login" action="" method="post">
+        <form class="stl_modal_login" action="" method="post" enctype="multipart/form-data">
             {{ csrfField() }}
             <h1>connectez-vous à X</h1>
             <div class="login_contenu_parent_s1">
@@ -14,8 +14,9 @@
                 </div>
                 <div class="login_contenu_section2">
                     @!component('component/btn_submit', { name: 'Suivant' })
-                
-                    @!component('component/button_primary', { name: "Mot de passe oublier ?", cls: 'login' })
+                    <div class="btn_password_forgat">
+                        @!component('component/button_primary', { name: "Mot de passe oublier ?"})
+                    </div>
                 </div>
                 <p style="text-align: center;">
                     Vous n'avez pas de compte ?   

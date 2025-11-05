@@ -1,3 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
-export default class ConnexionPagesController {}
+export default class ConnexionPagesController {
+  index({}: HttpContext) {}
+}

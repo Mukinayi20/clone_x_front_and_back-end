@@ -218,7 +218,7 @@ export default class RegistersController {
         return response.redirect().toRoute('auth.login.email')
       }
 
-      auth.use('web').login(user)
+      await auth.use('web').login(user)
 
       session.flash('success', 'connexion succes !')
       response.redirect().toRoute('home')
@@ -227,5 +227,12 @@ export default class RegistersController {
       session.flash('error', 'email ou mot de passe incorrect')
       return response.redirect().toRoute('auth.login.email')
     }
+  }
+
+  async logout({ auth, session, response }: HttpContext) {
+    await auth.use('web').logout()
+
+    session.flash('success', 'deconnexion succes !')
+    response.redirect().toRoute('home_connexion')
   }
 }

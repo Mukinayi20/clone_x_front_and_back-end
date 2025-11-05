@@ -1,0 +1,99 @@
+<section style="position: relative; display: none;" id="profil-page" class="mw-100 hidden page">
+    <div class="d-flex justify-content-between align-items-center border border-info-dark rounded" style="margin-bottom: 0.8rem; padding-left: 10px; padding-right: 10px">
+        <div class="d-flex align-items-center" style="margin-left: 15px; margin-right: 15px">
+            <div >
+                <img style="width: 1.4rem;" src="images/fleche-pointant-vers-la-gauche.png" alt="">
+            </div>
+            <div class="d-flex flex-column align-justify-center" style="position:relative; height: 2.5rem; margin-left: 15px;">
+                <p>
+                {{ user.prenom }} {{ user.nom }}
+                </p>
+                <small style="position: absolute; top: 18px; left: 3px">
+                    post
+                </small>
+            </div>
+        </div>
+        <div>
+            <img style="width: 1.7rem;" src="images/loupe.png" alt="">
+        </div>
+    </div>
+    <div class="bg-body-secondary rounded" style="height: 12rem;">
+        <img class="mh-100" src="#" alt="">
+    </div>
+    <div class="bg-body-secondary border border-white rounded-circle position-absolute border-3" style="height: 7rem; width: 7rem; position: absolute; top: 187px; left: 10px;">
+        <img src="#" alt="">
+    </div>
+    <button id="btn-editer-profil" type="button" class=" btn_edit_profil">Éditer le profil</button>
+    <div>
+        <h5 style="padding-top: 60px;">
+            {{ user.prenom }} {{ user.nom }}
+        </h5>
+        <small>
+            {{ user.nom }}
+        </small>
+    </div>
+    <div class="d-flex gap-3">
+        <small>
+            abonnement
+        </small>
+        <small>
+            abonné
+        </small>
+    </div>
+    <div class="d-flex justify-content-between" style="margin-top: 0.5rem;">
+        <button id="posts" type="button" class="btn_nav_profil">Posts</button>
+        <button id="medias-btn" type="button" class="btn_nav_profil">Médias</button>
+        <button id="jaimes" type="button" class="btn_nav_profil">J'aime</button>
+    </div>
+    <div>
+        @include('layout/profils/profil_posts')
+        @include('layout/profils/profil_medias')
+        @include('layout/profils/profil_jaime')
+    </div>
+
+</section>
+@include('component/editerProfil')
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    function openPage (page) {
+        page.style.display = 'block'
+    }
+
+    const btnPosts = document.getElementById('posts')
+    const btnMedias = document.getElementById('medias-btn')
+    const BtnJaimes = document.getElementById('jaimes')
+
+    const pageMedias = document.getElementById('mediaspage')
+    const pagePosts = document.getElementById('postespage')
+    const pageJaime = document.getElementById('jaime')
+
+    const modalEditerPorfil = document.getElementById('open-modale-edite-profil')
+    const btnEditerProfil = document.getElementById('btn-editer-profil')
+    const btnFermer = document.getElementById('fermer')
+
+    btnEditerProfil.addEventListener('click', () => {
+        modalEditerPorfil.style.display = 'block'
+    })
+
+    btnFermer.addEventListener('click', () => {
+        modalEditerPorfil.style.display = 'none'
+    })
+
+
+    let currentPage = pagePosts
+    currentPage.style.display = 'block'
+    let curentEdite = modalEditerPorfil
+    curentEdite.style.display = 'none'
+
+    function openPage(page) {
+        if(!page || page === currentPage) return
+        currentPage.style.display = 'none'
+        page.style.display = 'block'
+        currentPage = page
+    }
+    btnMedias.addEventListener('click', () => openPage(pageMedias))
+    btnPosts.addEventListener('click', () => openPage(pagePosts))
+    BtnJaimes.addEventListener('click', () => openPage(pageJaime))
+
+})
+</script>
