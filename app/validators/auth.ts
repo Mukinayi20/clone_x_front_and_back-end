@@ -43,3 +43,18 @@ export const loginValidatorstep2 = vine.compile(
     password: vine.string().minLength(6),
   })
 )
+
+export const forgotPasswordValidatorstep = vine.compile(
+  vine.object({
+    email: vine.string().email(),
+  })
+)
+
+export const resetPasswordValidatorstep1 = vine.compile(
+  vine.object({
+    token: vine.string(),
+    email: vine.string().email(),
+    password: vine.string().minLength(6),
+    confirmationPassword: vine.string().minLength(6),
+  })
+)

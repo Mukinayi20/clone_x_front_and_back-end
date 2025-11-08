@@ -67,7 +67,7 @@ export default class RegistersController {
       // *********************************************Clé pour la validation par mail
 
       const tokenMailSend = crypto.randomBytes(24).toString('hex')
-      const expiresAt = DateTime.local().plus({ hours: 24 }).toISO()
+      const expiresAt = DateTime.local().plus({ minutes: 10 }).toISO()
 
       const hashTokenMailSend = await hash.make(tokenMailSend)
 

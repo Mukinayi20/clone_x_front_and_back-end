@@ -8,6 +8,7 @@
                 <p>
                 {{ user.prenom }} {{ user.nom }}
                 </p>
+                
                 <small style="position: absolute; top: 18px; left: 3px">
                     post
                 </small>
@@ -18,27 +19,27 @@
         </div>
     </div>
     <div class="bg-body-secondary rounded" style="height: 12rem;">
-        <img class="mh-100" src="#" alt="">
+        <img style="object-fit: cover; width: 100%;" class="mh-100 rounded" src="{{ user.photo_couverture }}" alt="">
     </div>
     <div class="bg-body-secondary border border-white rounded-circle position-absolute border-3" style="height: 7rem; width: 7rem; position: absolute; top: 187px; left: 10px;">
-        <img src="#" alt="">
+        <img style="height: 7rem; width: 7rem;" class="border border-white rounded-circle" src="{{ user.photo_profil }}" alt="">
     </div>
     <button id="btn-editer-profil" type="button" class=" btn_edit_profil">Éditer le profil</button>
     <div>
         <h5 style="padding-top: 60px;">
             {{ user.prenom }} {{ user.nom }}
         </h5>
-        <small>
-            {{ user.nom }}
-        </small>
+        @if(auth.user.bio)
+            <small> {{ user.bio }} </small>
+        @end
     </div>
     <div class="d-flex gap-3">
-        <small>
+        <a href="" class="link-follow">
             abonnement
-        </small>
-        <small>
+        </a>
+        <a href="" class="link-follow">
             abonné
-        </small>
+        </a>
     </div>
     <div class="d-flex justify-content-between" style="margin-top: 0.5rem;">
         <button id="posts" type="button" class="btn_nav_profil">Posts</button>

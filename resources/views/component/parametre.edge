@@ -1,0 +1,24 @@
+<div  id="open-modale-parametre" style="display: none;">
+    <form action="/parametre" method="post" enctype="multipart/form-data" class="modal-edite-profil">
+    {{ csrfField() }}
+        <div class="modal-edite-contente">
+            <div class="d-flex justify-content-between align-items-center">
+                <div style="gap: 2.5rem;" class="d-flex align-items-center">
+                    @!component('component/btn_fermer', { id: 'fermer-parametre' })
+                    <p class="fw-bolder">
+                        Parametre
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-outline-info" disabled>Enrégistrer</button>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInputDisabled" placeholder="name@example.com" disabled>
+                <label for="floatingInput">{{ user.email }}</label>
+            </div>
+            <div>
+                <button id="modifier-password" type="button" class="btn btn-outline-primary">Modifier le mot de passe</button>
+                <button type="button" class="btn btn-outline-primary">Verouiller mon profil</button>
+            </div>
+        </div>
+    </form>
+</div>

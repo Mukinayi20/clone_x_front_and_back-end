@@ -15,6 +15,7 @@ body {
   width: 100%;
 }
 a {
+  @extend .text-primary;
   text-decoration: none;
 }
 
@@ -79,6 +80,16 @@ $btn_primary: (
   &:hover {
     background-color: $btn-primary-hover !important;
     transition: background-color 0.3s ease;
+  }
+}
+
+.link-follow {
+  font-size: 0.8rem;
+
+  &:hover {
+    @extend .text-decoration-underline;
+    @extend .text-info;
+    @extend .fst-italic;
   }
 }
 
@@ -162,7 +173,6 @@ $input_stl: (
   @extend .align-items-center;
   @extend .justify-content-center;
 }
-
 .style_modal {
   width: 35rem;
   height: 40rem;
@@ -173,7 +183,7 @@ $input_stl: (
 }
 
 .style_modal_key {
-  width: 35rem;
+  width: 28rem;
   padding: 4rem;
   @extend .d-flex;
   @extend .flex-column;
@@ -221,7 +231,7 @@ $input_stl: (
 
 .acceuil_contenu_title_h1 {
   width: 40rem;
-  font-size: 4.5rem;
+  font-size: 4rem;
   @extend .fw-bold;
 }
 
@@ -250,17 +260,27 @@ $input_stl: (
 // ****************** Gestion de style pour la page login ********************
 
 .login_contenu_parent_s1 {
-  margin-top: 0.7rem;
+  //margin-top: 0.7rem;
   margin-bottom: 0.9rem;
   @extend .d-flex;
   @extend .flex-column;
   @extend .justify-content-between;
   gap: 1rem;
+  height: 17rem;
+}
+.login_contenu_parent_V2 {
+  //margin-top: 0.7rem;
+  margin-bottom: 0.9rem;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .justify-content-between;
+  gap: 1rem;
+  height: 13rem;
 }
 
 .login_contenu_section1 {
   text-align: center;
-  height: 13rem;
+  height: 4rem;
   @extend .d-flex;
   @extend .flex-column;
   @extend .justify-content-between;
@@ -312,8 +332,10 @@ $input_stl_login: (
 
 .btn_password_forgat {
   @extend .d-flex;
-  @extend .flex-column;
-  @extend .align-items-center;
+  @extend .justify-content-center;
+  gap: 1rem;
+  width: 20rem;
+  margin-top: 1rem;
 }
 
 .btn_suivant_password_login {
@@ -424,4 +446,16 @@ $input_stl_login: (
   @extend .rounded-circle;
   @extend .bg-body-secondary;
   @extend .border-info-subtle;
+}
+
+.icone-post {
+  width: 1rem;
+}
+
+.modal-info-profil {
+  width: 31rem;
+  height: 25rem;
+  display: none;
+  position: absolute;
+  top: 18px;
 }

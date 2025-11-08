@@ -10,6 +10,7 @@
 const RegistersController = () => import('#controllers/auth_controller')
 const UpdateController = () => import('#controllers/updates_controller')
 const ConnexionPagesController = () => import('#controllers/connexion_pages_controller')
+const resetPasswordController = () => import('#controllers/reset_password_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import type { HttpContext } from '@adonisjs/core/http'
@@ -81,6 +82,28 @@ router
   })
   .as('wait.validate.mail')
   .use(middleware.guest())
+// Page de reinitialisation du mot de passe
+router
+  .get('forget-password', ({ view }) => {
+    return view.render('auth/forget_password')
+  })
+  .as('forgot.passeword')
+  .use(middleware.guest())
+
+router
+  .get('/reset-password', [resetPasswordController, 'resetPassword'])
+  .as('auth.reset-password')
+  .use(middleware.guest())
+
+router
+  .post('/forget-password', [resetPasswordController, 'handleForgotPassword'])
+  .as('auth.forgot-password')
+  .use(middleware.guest())
+
+router
+  .post('/reset-password', [resetPasswordController, 'handleResetPassword'])
+  .as('auth.handleReset-password')
+  .use(middleware.guest())
 router.post('/register', [RegistersController, 'handleregister']).use(middleware.guest())
 router.post('/register/step2', [RegistersController, 'handleregister2']).use(middleware.guest())
 router.post('/login-email', [RegistersController, 'handleloginCheckEmail']).use(middleware.guest())
@@ -89,5 +112,7 @@ router
   .use(middleware.guest())
 router.delete('/logout', [RegistersController, 'logout']).as('auth.logout').use(middleware.auth())
 router.post('/update-profil', [UpdateController, 'updateProfil']).use(middleware.auth())
-
-// {{ user.prenom }},
+router
+  .post('/modificatio-password', [UpdateController, 'modificationPassword'])
+  .as('auth.modify-password')
+  .use(middleware.auth())

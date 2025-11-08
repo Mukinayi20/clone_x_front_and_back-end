@@ -41,10 +41,10 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column()
-  declare photoProfil: string | null
+  declare photo_profil: string | null
 
   @column()
-  declare photoCouverture: string | null
+  declare photo_couverture: string | null
 
   @column.dateTime()
   declare birthday: DateTime

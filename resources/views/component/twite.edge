@@ -1,0 +1,45 @@
+<div>
+    <div class="d-flex justify-content-between" style="padding-left: 1rem; padding-right: 1rem; padding-bottom: 1rem;">
+        <div class="d-flex align-items-center justify-content-between" style="width: 6.4rem;" >
+            <img src="{{ user.photo_profil }}" alt="Profil" class="w-8 rounded-full object-cover"/>
+            <h1>{{ user.nom }}</h1>
+        </div>
+        <button id="btn_info" class="btn_fermer" class="d-flex align-items-center">
+            <img style="width: 1rem;" src="/icones/points.png"></img>
+        </button>
+    </div>
+    <div style="padding-left: 2rem;">
+        <img class="rounded-4 object-cover" style="width:25rem; height: 23rem;" src="{{ user.photo_profil }}" alt="">
+    </div>
+    <div class="d-flex justify-content-around" style="padding: 1rem;">
+        <img class="icone-post" src="/public/icones/commenter.png" alt="Commenter">
+        <img class="icone-post" src="/public/icones/boucle.png" alt="retwitter">
+        <img class="icone-post" src="/public/icones/coeur.png" alt="liker">
+        <img class="icone-post" src="/public/icones/enregistrer-instagram.png" alt="signet">
+    </div>
+</div>
+@include('component/profil_plus')
+<script>
+    const infoProfil = document.getElementById('content')
+    const content = document.getElementById('modal')
+    const btnInfo = document.getElementById('btn_info')
+
+
+
+    btnInfo.addEventListener('click', () => {
+        console.log('bonjour')
+        content.style.display = 'block'
+    })
+
+    content.addEventListener('click', (event) => {
+        if(content.contains(event.target)){
+            console.log('Bonjour')
+            content.style.display = 'none'
+        }
+    })
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') content.style.display = 'none'
+    })
+    
+</script>

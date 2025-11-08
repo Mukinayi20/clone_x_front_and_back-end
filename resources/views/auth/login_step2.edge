@@ -3,16 +3,17 @@
     <section class="register_contenair" id="modal_register">
             <form class="style_modal_key" action="" method="post" enctype="multipart/form-data">
                 {{ csrfField() }}
+                <h1 style="padding-bottom: 2rem;" class="fs-4 fw-medium">Votre mot de passe</h1>
                 <div class="login_modal_password">
-                    <h1 style="padding-bottom: 2rem;">Votre mot de passe</h1>
                     <div class="form-floating mb-3">
                         <input type="email" style="width: 20rem;" class="form-control" id="floatingInputDisabled" placeholder="name@example.com" disabled>
                         <label for="floatingInputDisabled"> {{ user }} </label>
                     </div>
                     @!component('component/input', { name: 'password', placeholder: 'password', label: 'password', cls: 'login_contenu_input_password' })
-                    <a href="#" style="text-align: start;">Mot de passe oublier</a>
+                    
+                    <a href="{{ route('forgot.passeword') }}" style="text-align: start;">Mot de passe oublier</a>
                 </div>
-                <div class="btn_password_forgat">
+                <div class="login_contenu_section2" style="padding-top: 1.4rem;">
                     @!component('component/btn_submit', { name: 'Se connecter', cls:'btn_suivant_password_login'})
                 </div>
             </form>
