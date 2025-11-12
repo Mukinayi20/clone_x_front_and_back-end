@@ -9,7 +9,6 @@ export default class UpdatesController {
       const { profil, couverture, fullname, bio, location } =
         await request.validateUsing(updateValidator)
       const user = auth.user!
-      console.log('connecter', auth.user)
 
       if (profil) {
         await profil.move(app.makePath('public/uploads'), {

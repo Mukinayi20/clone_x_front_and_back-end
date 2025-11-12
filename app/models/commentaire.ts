@@ -9,16 +9,19 @@ import { DateTime } from 'luxon'
 
 export default class Commentaire extends BaseModel {
   @column({ isPrimary: true })
-  declare idCommentaire: number
+  declare id: number
 
   @column()
-  declare contenu: string | null
+  declare content: string | null
 
   @column.dateTime()
   declare dateCommentaire: DateTime
 
   @column()
-  declare idMedia: number | null
+  declare idTweet: number
+
+  @column()
+  declare idUser: number
 
   @belongsTo(() => Media, { foreignKey: 'idMedia' })
   declare media: BelongsTo<typeof Media>

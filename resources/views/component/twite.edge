@@ -1,24 +1,41 @@
-<div>
-    <div class="d-flex justify-content-between" style="padding-left: 1rem; padding-right: 1rem; padding-bottom: 1rem;">
-        <div class="d-flex align-items-center justify-content-between" style="width: 6.4rem;" >
-            <img src="{{ user.photo_profil }}" alt="Profil" class="w-8 rounded-full object-cover"/>
-            <h1>{{ user.nom }}</h1>
+@each(tweet in tweets)
+    <div>
+        <div class="d-flex justify-content-between" style="padding-left: 1rem; padding-right: 1rem; padding-bottom: 1rem;">
+                <div class="d-flex align-items-center justify-content-between" style="width: 6.4rem;" >
+                    <img src="{{ tweet.user.photo_profil }}" alt="Profil" class="w-8 rounded-full object-cover"/>
+                    <p style="width: 15rem;">{{ tweet.user?.nom }} {{ tweet.user?.prenom }}</p>
+                </div>
+            <button id="btn_info" class="btn_fermer d-flex align-items-center">
+                <img style="width: 1rem; " src="/icones/points.png"></img>
+            </button>
         </div>
-        <button id="btn_info" class="btn_fermer" class="d-flex align-items-center">
-            <img style="width: 1rem;" src="/icones/points.png"></img>
-        </button>
+        <div>
+            {{ truncate(tweet?.content, 25) }}
+        </div>
+            @if(tweet.medias && tweet.medias?.length)
+                <div style="padding-left: 2rem;">
+                    @each(media in tweet.medias)
+                        <img class="rounded-4 object-cover" style="width:25rem; height: 23rem;" src="{{ media.url }}" alt="">
+                    @endeach
+                </div>
+            @endif
+        <div class="d-flex justify-content-around" style="padding: 1rem;">
+            <button>
+                <img class="icone-post" src="/public/icones/commenter.png" alt="Commenter">
+            </button>
+            <button>
+                <img class="icone-post" src="/public/icones/boucle.png" alt="retwitter">
+            </button>
+            <button type="button" id="likes">
+                <img class="icone-post" src="/public/icones/coeur.png" alt="liker">
+            </button>
+            <button>
+                <img class="icone-post" src="/public/icones/enregistrer-instagram.png" alt="signet">
+            </button>
+        </div> 
     </div>
-    <div style="padding-left: 2rem;">
-        <img class="rounded-4 object-cover" style="width:25rem; height: 23rem;" src="{{ user.photo_profil }}" alt="">
-    </div>
-    <div class="d-flex justify-content-around" style="padding: 1rem;">
-        <img class="icone-post" src="/public/icones/commenter.png" alt="Commenter">
-        <img class="icone-post" src="/public/icones/boucle.png" alt="retwitter">
-        <img class="icone-post" src="/public/icones/coeur.png" alt="liker">
-        <img class="icone-post" src="/public/icones/enregistrer-instagram.png" alt="signet">
-    </div>
-</div>
-@include('component/profil_plus')
+    @include('component/profil_plus')
+@end
 <script>
     const infoProfil = document.getElementById('content')
     const content = document.getElementById('modal')
@@ -27,7 +44,7 @@
 
 
     btnInfo.addEventListener('click', () => {
-        console.log('bonjour')
+        console.log('bonjour le mond')
         content.style.display = 'block'
     })
 

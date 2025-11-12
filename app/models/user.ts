@@ -2,10 +2,8 @@ import { BaseModel, column, hasMany, belongsTo } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 import Follow from './follow.js'
 import type { HasMany, BelongsTo } from '@adonisjs/lucid/types/relations'
-import Like from './like.js'
 import Message from './message.js'
-import Signet from './signet.js'
-import Tweet from './tweet.js'
+import Tweet from '#models/tweet'
 import Commentaire from './commentaire.js'
 import hash from '@adonisjs/core/services/hash'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
@@ -79,27 +77,18 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @column()
   declare verified: boolean | null
 
+  @hasMany(() => Tweet)
+  public tweet: HasMany<typeof Tweet> | undefined
+
   @hasMany(() => Follow, { foreignKey: 'idFollowers' })
   declare followers: HasMany<typeof Follow>
 
   @hasMany(() => Follow, { foreignKey: 'idFollowing' })
   declare following: HasMany<typeof Follow>
 
-  @hasMany(() => Like, { foreignKey: 'idUser' })
-  declare likes: HasMany<typeof Like>
-
   @hasMany(() => Message, { foreignKey: 'sender' })
   declare sentMessages: HasMany<typeof Message>
 
   @hasMany(() => Message, { foreignKey: 'receiver' })
   declare receivedMessages: HasMany<typeof Message>
-
-  @hasMany(() => Signet, { foreignKey: 'idUser' })
-  declare signets: HasMany<typeof Signet>
-
-  @belongsTo(() => Tweet, { foreignKey: 'idTweet' })
-  declare tweet: BelongsTo<typeof Tweet>
-
-  @belongsTo(() => Commentaire, { foreignKey: 'idCommentaire' })
-  declare commentaire: BelongsTo<typeof Commentaire>
 }

@@ -1,32 +1,39 @@
-<div style="display: none;" id="page-accueil">
+@include('partials/header')
+<div style="" id="page-accueil">
     <div class="d-flex flex-row justify-content-around">
-        @!component('component/nav_bar_home', { name: 'Pour vous', id: 'pour-vous' })
-        @!component('component/nav_bar_home', { name: 'Abonnement', id: 'abonnement' })
+        <button type="button" class="btn_nav" id="pour-vous">Pour vous</button>
+        <button type="button" class="btn_nav" id="abonnement">Abonnement</button>
     </div>
     <div>
         @include('layout/accueils/pour_vous')
         @include('layout/accueils/abonnement')
     </div>
 </div>
-
+@include('partials/footer')
 <script>
-    
+    document.addEventListener('DOMContentLoaded', () => {
     const btnPourVous = document.getElementById('pour-vous')
     const btnAbonnement = document.getElementById('abonnement')
+
 
     const pagePourVous = document.getElementById('page_pour-vous')
     const pageAbonnement = document.getElementById('page_abonnement')
 
     let currentPage = pagePourVous
-      currentPage.style.display = 'block'
+    currentPage.style.display = 'block'
 
-      function openPage(page) {
-          if(!page || page === currentPage) return
-          currentPage.style.display = 'none'
-          page.style.display = 'block'
-          currentPage = page
-      }
-    btnPourVous.addEventListener('click', () => openPage(pagePourVous))
-    btnAbonnement.addEventListener('click', () => openPage(pageAbonnement))
-    
+    function openPage(page) {
+      if (!page || page === currentPage) return
+      currentPage.style.display = 'none'
+      page.style.display = 'block'
+      currentPage = page
+    }
+
+    btnAbonnement.addEventListener('click', () => {
+        openPage(pageAbonnement)
+    })
+
+    btnPourVous.addEventListener('click', () =>  openPage(pagePourVous))
+    //btnAbonnement.addEventListener('click', () => openPage(pageAbonnement))
+  })
 </script>

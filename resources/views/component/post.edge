@@ -1,0 +1,86 @@
+@let(title = 'post' )
+@include('partials/header')
+<div  id="modale-post">
+    <form action="" method="post" enctype="multipart/form-data" class="modal-edite-profil">
+    {{ csrfField() }}
+        <div class="modal-edite-contente">
+            <div class="d-flex justify-content-between align-items-center">
+                <div style="gap: 2.5rem;" class="d-flex align-items-center">
+                    
+                        <a href="{{ route('home') }}" class="btn_fermer"><button type="button" ></button><img style="width: 1rem;" src="public/icones/fermer.png" alt="fermer"> </button></a>
+                   
+                    <p class="fw-bolder">
+                        Faire une publication
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-outline-info">Enrégistrer</button>
+            </div>
+            
+            <div style="position: relative;">
+                <div  class="bg-body-secondary rounded" style="height: 10rem;">
+                    <img id="image-publication" class="mh-100" style="width: 100%; object-fit: cover;" src="#" alt="">
+                </div> 
+            </div>
+            
+            <div class="input-group">
+                <input name="slugImg" type="file" class="form-control" accept="image/*" id="avatar-publication" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                <small class="btn" id="inputGroupFileAddon04">Quoi de neuf?</small>
+            </div>
+
+            <div class="form-floating">
+                <textarea name="content" class="form-control" placeholder="Leave a comment here" id="content" value="{{ old('content') }}" style="height: 100px"></textarea>
+            </div>
+
+        </div>
+    </form>
+</div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
+@include('partials/footer')
+
+
+
+<script>
+
+        //const inputFileProfil = document.getElementById('avatar-profil')
+        const inputpublication = document.getElementById('avatar-publication')
+        //const previewImageProfil = document.getElementById('image-profil')
+        const previewpublication = document.getElementById('image-publication')
+
+        //inputFileProfil.addEventListener('change', (event) => {
+        //    const file = event.target.files[0]
+
+        //    if (file) {
+        //    const reader = new FileReader()
+
+        //    reader.onload = (e) => {
+        //        previewImageProfil.src = e.target.result
+        //       previewImageProfil.style.display = 'block'
+        //    }
+
+        //    reader.readAsDataURL(file)
+        //    } else {
+        //    previewImageProfil.src = ''
+        //    previewImageProfil.style.display = 'none'
+        //    }
+        //})
+        inputpublication.addEventListener('change', (event) => {
+            const file = event.target.files[0]
+
+            if (file) {
+            const reader = new FileReader()
+
+            reader.onload = (e) => {
+                previewpublication.src = e.target.result
+                previewpublication.style.display = 'block'
+            }
+
+            reader.readAsDataURL(file)
+            } else {
+            previewpublication.src = ''
+            previewpublication.style.display = 'none'
+            }
+        })
+        new SimpleMDE({ element: document.getElementById("content") });
+</script>

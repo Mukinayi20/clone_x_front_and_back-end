@@ -1,25 +1,21 @@
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
-import Commentaire from './commentaire.js'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Message from './message.js'
 import Tweet from './tweet.js'
 
 export default class Media extends BaseModel {
   @column({ isPrimary: true })
-  declare idMedia: number
+  declare id: number
 
   @column()
-  declare urlMedia: string | null
+  declare url: string | null
 
   @column()
-  declare typeMedia: string | null
+  declare tweetId: number
 
-  @hasMany(() => Commentaire, { foreignKey: 'idMedia' })
-  declare commentaires: HasMany<typeof Commentaire>
+  @belongsTo(() => Tweet, { foreignKey: 'tweetId', localKey: 'idTweet' })
+  declare tweet: BelongsTo<typeof Tweet>
 
   @hasMany(() => Message, { foreignKey: 'idMedia' })
   declare messages: HasMany<typeof Message>
-
-  @hasMany(() => Tweet, { foreignKey: 'idMedia' })
-  declare tweets: HasMany<typeof Tweet>
 }

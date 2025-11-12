@@ -1,40 +1,43 @@
-import { BaseModel, column, hasMany, belongsTo } from '@adonisjs/lucid/orm'
-import Like from './like.js'
-import type { HasMany, BelongsTo } from '@adonisjs/lucid/types/relations'
-import Signet from './signet.js'
-import Media from './media.js'
-import Commentaire from './commentaire.js'
-import User from './user.js'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import User from '#models/user'
 import { DateTime } from 'luxon'
+import Media from './media.js'
 
 export default class Tweet extends BaseModel {
   @column({ isPrimary: true })
   declare idTweet: number
 
   @column()
-  declare contentTweet: string
+  declare content: string
+
+  @column()
+  declare slug: string
+
+  @column()
+  declare userId: number
 
   @column.dateTime()
   declare dateTweet: DateTime
 
-  @column()
-  declare idMedia: number | null
+  @belongsTo(() => User, {
+    foreignKey: 'userId',
+    localKey: 'idUser',
+  })
+  declare user: BelongsTo<typeof User>
 
-  @column()
-  declare idCommentaire: number | null
+  @hasMany(() => Media, {
+    foreignKey: 'tweetId',
+    localKey: 'idTweet',
+  })
+  declare medias: HasMany<typeof Media>
 
-  @hasMany(() => Like, { foreignKey: 'idTweet' })
-  declare likes: HasMany<typeof Like>
-
-  @hasMany(() => Signet, { foreignKey: 'idTweet' })
-  declare signets: HasMany<typeof Signet>
-
-  @belongsTo(() => Media, { foreignKey: 'idMedia' })
-  declare media: BelongsTo<typeof Media>
-
-  @belongsTo(() => Commentaire, { foreignKey: 'idCommentaire' })
-  declare commentaire: BelongsTo<typeof Commentaire>
-
-  @hasMany(() => User, { foreignKey: 'idTweet' })
-  declare users: HasMany<typeof User>
+  @hasMany(() => Media, {
+    foreignKey: 'tweetId',
+    localKey: 'idTweet',
+  })
+  declare likes: HasMany<typeof Media>
+  // @hasMany(() => User, { foreignKey: 'idTweet' })
+  // declare users: HasMany<typeof User>
+  // static id_tweet: number | undefined
 }

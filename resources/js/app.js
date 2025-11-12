@@ -32,3 +32,8 @@ const modal = new bootstrap.Modal(modalElement, {
 })
 modal.show()
 modal.hide()
+
+
+new SimpleMDE({ element: document.getElementById("content") });
+
+

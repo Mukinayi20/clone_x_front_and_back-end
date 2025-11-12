@@ -9,7 +9,7 @@
 
 const RegistersController = () => import('#controllers/auth_controller')
 const UpdateController = () => import('#controllers/updates_controller')
-const ConnexionPagesController = () => import('#controllers/connexion_pages_controller')
+const PostController = () => import('#controllers/post_controller')
 const resetPasswordController = () => import('#controllers/reset_password_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
@@ -22,6 +22,8 @@ router
   })
   .as('home')
   .use(middleware.auth())
+
+//router.get('/', [PostController, 'index'])
 
 // Vue modal login step1 email
 
@@ -96,6 +98,15 @@ router
   .use(middleware.guest())
 
 router
+  .get('/editer-profil', async ({ view, auth }) => {
+    return view.render('component/editerProfil', {
+      user: auth.user,
+    })
+  })
+  .as('edit.profil')
+  .use(middleware.auth())
+
+router
   .post('/forget-password', [resetPasswordController, 'handleForgotPassword'])
   .as('auth.forgot-password')
   .use(middleware.guest())
@@ -115,4 +126,43 @@ router.post('/update-profil', [UpdateController, 'updateProfil']).use(middleware
 router
   .post('/modificatio-password', [UpdateController, 'modificationPassword'])
   .as('auth.modify-password')
+  .use(middleware.auth())
+
+router.get('/post-creat', [PostController, 'create']).as('post.creat').use(middleware.auth())
+router.post('/post-creat', [PostController, 'store']).use(middleware.auth())
+router
+  .get('/post/:id', [PostController, 'show'])
+  .as('post.show')
+  .use(middleware.auth())
+  .where('id', router.matchers.number())
+
+router
+  .post('/tweets/:id/like', [PostController, 'like'])
+  .use(middleware.auth())
+  .where('id', router.matchers.number())
+
+// router
+//   .get('/accueil', async ({ auth, view }: HttpContext) =>
+//     view.render('layout/accueils/acceuil', { user: auth.user })
+//   )
+//   .use(middleware.auth())
+//   .as('accueil')
+
+router.get('/accueil', [PostController, 'index']).use(middleware.auth()).as('accueil')
+
+router
+  .get('/grok', async ({ auth, view }: HttpContext) =>
+    view.render('layout/grok', { user: auth.user })
+  )
+  .use(middleware.auth())
+router
+  .get('/signet', async ({ auth, view }: HttpContext) =>
+    view.render('layout/signet', { user: auth.user })
+  )
+  .use(middleware.auth())
+router
+  .get('/profil', async ({ auth, view }: HttpContext) => {
+    const user = auth.user
+    return view.render('layout/profils/profil', { user })
+  })
   .use(middleware.auth())

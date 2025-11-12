@@ -3,19 +3,20 @@ import User from './user.js'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Tweet from './tweet.js'
 import Commentaire from './commentaire.js'
+import { DateTime } from 'luxon'
 
 export default class Signet extends BaseModel {
   @column({ isPrimary: true })
-  declare idSignet: number
+  declare id: number
 
   @column()
-  declare idUser: number | null
+  declare idTweet: number
 
   @column()
-  declare idTweet: number | null
+  declare idCommentaire: number
 
   @column()
-  declare idCommentaire: number | null
+  declare dateSignet: DateTime
 
   @belongsTo(() => User, { foreignKey: 'idUser' })
   declare user: BelongsTo<typeof User>

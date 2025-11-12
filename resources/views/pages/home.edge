@@ -1,25 +1,25 @@
 @include('partials/header')
 <div class="container">
   <div class="row gap-3">
-    <div class="col-3 text-end " style="gap: 3rem; margin-top: 0.5rem;">
+    <div class="col-3 text-end" style="gap: 3rem; margin-top: 0.5rem;">
       <div class="d-flex flex-column align-items-center border border-info-dark border-top-0 rounded" style="gap: 2rem;">
         <div class="d-flex flex-column">
-            @!component('component/nav_bar_home', { name: 'Accueil', id: 'btn-accueil' })
-            @!component('component/nav_bar_home', { name: 'Signet', id: 'btn-signet' })
-            @!component('component/nav_bar_home', { name: 'Grok', id: 'btn-grok' })
-            @!component('component/nav_bar_home', { name: 'Profil', id: 'btn-profil'})
+            @!component('component/nav_bar_home', { name: 'Accueil', id: 'btn-accueil', onclick: "loadPage('/accueil')"})
+            @!component('component/nav_bar_home', { name: 'Signet', id: 'btn-signet', onclick: "loadPage('/signet')" })
+            @!component('component/nav_bar_home', { name: 'Grok', id: 'btn-grok', onclick: "loadPage('/grok')" })
+            @!component('component/nav_bar_home', { name: 'Profil', id: 'btn-profil', onclick: "loadPage('/profil')" })
         </div>
-        <button type="button" class="btn_nav_dark">Poster</button>
+        <a href="{{ route('post.creat') }}" class="btn_nav_dark text-light"><button id="btn-post" type="button" ></button>Poster </button></a>
         <button type="button" class="btn_nav_danger" data-bs-target="#staticBackdrop" data-bs-toggle="modal">Deconnexion</button>
         @include('component/card_deconnexion')
       @!component('component/nav_bar_home', { name: 'Parametre', id: 'btn-parametre'})
       </div>
     </div>
-    <div class="col border border-info-dark border-top-0 rounded" style="margin-top: 0.5rem;">
-      @include('layout/accueils/acceuil')
-      @include('layout/signet')
-      @include('layout/grok')
-      @include('layout/profils/profil')
+    <div id="content" class="col border border-info-dark border-top-0 rounded" style="position:relative; margin-top: 0.5rem;">
+      //@include('layout/accueils/acceuil')
+      //@include('layout/signet')
+      //@include('layout/grok')
+      //@include('layout/profils/profil')
     </div>
     <div class="col">
       <div class="container_section3">
@@ -43,8 +43,13 @@
 
 @include('partials/footer')
 
+
 <script>
+  
+
   document.addEventListener('DOMContentLoaded', () => {
+
+    
       function openPage (page) {
           page.style.display = 'block'
       }
@@ -59,6 +64,7 @@
       const BtnGrok = document.getElementById('btn-grok')
       const BtnProfil = document.getElementById('btn-profil')
       const btnParametre = document.getElementById('btn-parametre')
+      const btnPoste = document.getElementById('btn-post')
 
       const pageAccueil = document.getElementById('page-accueil')
       const pageGrok = document.getElementById('grok-page')
@@ -100,4 +106,14 @@
       BtnGrok.addEventListener('click', () => openPage(pageGrok))
       BtnProfil.addEventListener('click', () => openPage(pageprofil))
   })
+</script>
+
+<script>
+  async function loadPage(route) {
+    const response = await fetch(route)
+    const html = await response.text()
+    document.getElementById('content').innerHTML = html
+  }
+
+  window.addEventListener('DOMContentLoaded', () => loadPage('/accueil'))
 </script>
