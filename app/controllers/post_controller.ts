@@ -9,6 +9,8 @@ import type { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 import { unlink } from 'node:fs/promises'
 import path from 'node:path'
+import { alterTweet } from '#abilities/main'
+import TweetPolicy from '#policies/tweet_policy'
 
 export default class PostController {
   /**
@@ -136,18 +138,26 @@ export default class PostController {
   /**
    * Edit individual record
    */
-  async edit({ params, view }: HttpContext) {
+  async edit({ params, view, bouncer, response, session }: HttpContext) {
     const { id } = params
     const tweet = await Tweet.query().where('idTweet', params.id).preload('medias').firstOrFail()
+    if (await bouncer.with(TweetPolicy).denies('alterPost', tweet)) {
+      session.flash('error', "Vous ne pouver pas modifier ce poste parce qu'il n'est pas à vous")
+      return response.redirect().back()
+    }
     return view.render('component/edite_tweet', { tweet })
   }
 
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request, response, session }: HttpContext) {
+  async update({ params, request, response, session, bouncer }: HttpContext) {
     const { id } = params
     const tweet = await Tweet.query().where('idTweet', id).preload('medias').firstOrFail()
+    if (await bouncer.denies(alterTweet, tweet)) {
+      session.flash('error', "Vous ne pouver pas modifier ce poste parce qu'il n'est pas à vous")
+      return response.redirect().back()
+    }
     const { content, slugImg } = await request.validateUsing(updatePostValidator)
     let newFilePath: string | undefined
     let currentMedia = tweet.medias.length > 0 ? tweet.medias[0] : null
@@ -203,9 +213,13 @@ export default class PostController {
   /**
    * Delete record
    */
-  async destroy({ params, session, response }: HttpContext) {
+  async destroy({ params, session, response, bouncer }: HttpContext) {
     const { id } = params
     const tweet = await Tweet.query().where('idTweet', id).preload('medias').firstOrFail()
+    if (await bouncer.denies(alterTweet, tweet)) {
+      session.flash('error', "Vous ne pouver pas modifier ce poste parce qu'il n'est pas à vous")
+      return response.redirect().back()
+    }
     try {
       if (tweet.medias.length > 0) {
         let oldImg = tweet.medias[0].url
