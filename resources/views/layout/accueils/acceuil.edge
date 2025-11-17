@@ -10,8 +10,10 @@
     </div>
 </div>
 @include('partials/footer')
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    
+document.addEventListener('DOMContentLoaded', () => {
     const btnPourVous = document.getElementById('pour-vous')
     const btnAbonnement = document.getElementById('abonnement')
 
@@ -35,5 +37,5 @@
 
     btnPourVous.addEventListener('click', () =>  openPage(pagePourVous))
     //btnAbonnement.addEventListener('click', () => openPage(pageAbonnement))
-  })
+})
 </script>

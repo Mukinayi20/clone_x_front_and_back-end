@@ -122,7 +122,7 @@ router
   .post('/login-password', [RegistersController, 'handleloginCheckpassword'])
   .use(middleware.guest())
 router.delete('/logout', [RegistersController, 'logout']).as('auth.logout').use(middleware.auth())
-router.post('/update-profil', [UpdateController, 'updateProfil']).use(middleware.auth())
+router.post('/editer-profil', [UpdateController, 'updateProfil']).use(middleware.auth())
 router
   .post('/modificatio-password', [UpdateController, 'modificationPassword'])
   .as('auth.modify-password')
@@ -133,6 +133,24 @@ router.post('/post-creat', [PostController, 'store']).use(middleware.auth())
 router
   .get('/post/:id', [PostController, 'show'])
   .as('post.show')
+  .use(middleware.auth())
+  .where('id', router.matchers.number())
+
+router
+  .get('/tweet/:id/edit', [PostController, 'edit'])
+  .as('post.edit')
+  .use(middleware.auth())
+  .where('id', router.matchers.number())
+
+router
+  .put('/tweet/:id/edit', [PostController, 'update'])
+  .as('post.update')
+  .use(middleware.auth())
+  .where('id', router.matchers.number())
+
+router
+  .delete('/tweet/:id/delete', [PostController, 'destroy'])
+  .as('post.delete')
   .use(middleware.auth())
   .where('id', router.matchers.number())
 

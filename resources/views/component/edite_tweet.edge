@@ -1,7 +1,7 @@
-@let(title = 'post' )
+@let(title = 'modifier tweet' )
 @include('partials/header')
 <div  id="modale-post">
-    <form action="" method="post" enctype="multipart/form-data" class="modal-edite-profil">
+    <form action="{{ route('post.update', { id: tweet.idTweet }) }}?_method=PUT" method="post" enctype="multipart/form-data" class="modal-edite-profil">
     {{ csrfField() }}
         <div class="modal-edite-contente">
             <div class="d-flex justify-content-between align-items-center">
@@ -10,25 +10,26 @@
                         <a href="{{ route('home') }}" class="btn_fermer"><button type="button" ></button><img style="width: 1rem;" src="/icones/fermer.png" alt="fermer"> </button></a>
                    
                     <p class="fw-bolder">
-                        Faire une publication
+                       Editer
                     </p>
                 </div>
                 <button type="submit" class="btn btn-outline-info">Enrégistrer</button>
             </div>
             
-            <div style="position: relative;">
-                <div  class="bg-body-secondary rounded" style="height: 10rem;">
-                    <img id="image-publication" class="mh-100" style="width: 100%; object-fit: cover;" src="#" alt="">
-                </div> 
-            </div>
-            
+            @if(tweet.medias)
+                <div style="position: relative;">
+                    <div  class="bg-body-secondary rounded" style="height: 10rem;">
+                        <img id="image-publication" class="mh-100" style="width: 100%; object-fit: cover;" src="{{ tweet.medias.url }}" alt="Image du post">
+                    </div>
+                </div>
+            @end
             <div class="input-group">
                 <input name="slugImg" type="file" class="form-control" accept="image/*" id="avatar-publication" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                <small class="btn" id="inputGroupFileAddon04">Quoi de neuf?</small>
+                <small class="btn" id="inputGroupFileAddon04">Changer l’image</small>
             </div>
 
             <div class="form-floating">
-                <textarea name="content" class="form-control" placeholder="Leave a comment here" id="content" value="{{ old('content') }}" style="height: 100px"></textarea>
+                <textarea name="content" class="form-control" placeholder="Leave a comment here" id="content" style="height: 100px">{{ tweet.content }}</textarea>
             </div>
 
         </div>

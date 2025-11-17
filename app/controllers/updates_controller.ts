@@ -32,12 +32,6 @@ export default class UpdatesController {
       const prenom = parts[0] || ''
       const nom = parts.slice(1).join('') || ''
 
-      // user.prenom = prenom
-      // user.nom = nom
-      // user.bio = bio
-      // user.adresse = location
-      // await user.save()
-
       user.merge({
         photo_profil: fileProfil ?? user.photo_profil,
         photo_couverture: fileCouverture ?? user.photo_couverture,
@@ -50,7 +44,7 @@ export default class UpdatesController {
 
       console.log('User sauvegardé:', user.photo_couverture)
       session.flash('success', 'Vorte profil est mis à jour avec succes')
-      return response.redirect().back()
+      return response.redirect().toRoute('home')
     } catch (error) {
       console.log("Erreur d'importation", error)
     }

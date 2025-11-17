@@ -4,8 +4,8 @@
     <h3>Créer un mot de passe</h3>
     <form class="style_modal_key" action="" method="post" enctype="multipart/form-data">
         {{ csrfField() }}
-        @!component('component/input', { name: 'password', placeholder: 'votre mot de passe', label: 'password' })
-        @!component('component/input', { name: 'confirmpassword', placeholder: 'Confirmer le mot de passe', label: 'Confirm password' })
+        @!component('component/input', { name: 'password', placeholder: 'votre mot de passe', label: 'password', type: 'password' })
+        @!component('component/input', { name: 'confirmpassword', placeholder: 'Confirmer le mot de passe', label: 'Confirm password', type: 'password' })
         @!component('component/btn_submit', { name: "S'inscrire" })
     </form>
 </section>

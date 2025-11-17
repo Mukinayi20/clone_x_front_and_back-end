@@ -1,18 +1,63 @@
-import Commentaire from '#models/commentaire'
+import fs from 'node:fs/promises'
 import Like from '#models/like'
 import Media from '#models/media'
 import Signet from '#models/signet'
 import Tweet from '#models/tweet'
-import { storePostValidator } from '#validators/post'
+import { storePostValidator, updatePostValidator } from '#validators/post'
 import { cuid } from '@adonisjs/core/helpers'
 import type { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
+import { unlink } from 'node:fs/promises'
 import path from 'node:path'
 
 export default class PostController {
   /**
    * Display a list of resource
    */
+  async like({ auth, params, response }: HttpContext) {
+    const tweetId = params.id
+    const user = auth.user
+    if (!user) {
+      return response.unauthorized({ message: 'Unauthorized' })
+    }
+    const userId = user.idUser
+
+    const existingLike = await Like.query()
+      .where('users_id', userId)
+      .where('tweets_id', tweetId)
+      .first()
+
+    const tweets = await Like.find(tweetId)
+    if (!tweets) {
+      return response.notFound({ message: 'Tweet non trouvé' })
+    }
+
+    if (existingLike) {
+      await existingLike.delete()
+      tweets.likesCount = (tweets.likesCount || 0) - 1
+      await tweets.save()
+
+      return response.json({
+        message: 'Like retiré avec succès',
+        liked: false,
+        likesCount: tweets.likesCount,
+      })
+    } else {
+      await Like.create({ idUser: userId, idTweet: tweetId })
+      const tweet = await Tweet.find(tweetId)
+      if (tweet && typeof tweet.idTweet === 'number') {
+        tweet.idTweet = tweet.idTweet + 1
+        await tweet.save()
+
+        return response.json({
+          message: 'Tweet liké avec succès',
+          liked: true,
+          likesCount: tweet.idTweet,
+        })
+      }
+    }
+  }
+
   async index({ view, auth, request }: HttpContext) {
     const page = request.input('page', 1)
     const limit = 50
@@ -30,25 +75,6 @@ export default class PostController {
     //   .preload('tweet', (u) => u.select('idTweet'))
 
     return view.render('layout/accueils/acceuil', { tweets, user: auth.user })
-  }
-
-  async like({ auth, params, response }: HttpContext) {
-    const user = auth.user!
-    const tweetId = params.id
-
-    const existingLike = await Like.query()
-      .where('idUser', user.idUser)
-      .where('idTweet', tweetId)
-      .first()
-
-    if (existingLike) {
-      await existingLike.delete()
-    } else {
-      await Like.create({
-        idUser: user.idUser,
-        idTweet: tweetId,
-      })
-    }
   }
 
   /**
@@ -101,10 +127,6 @@ export default class PostController {
       return response.redirect().back()
     }
   }
-
-  /**
-   * Show individual record
-   */
   async show({ params, view }: HttpContext) {
     const UserTweet = await Tweet.query().where('idTweet', params.id).preload('user').firstOrFail()
 
@@ -114,15 +136,97 @@ export default class PostController {
   /**
    * Edit individual record
    */
-  async edit({ params }: HttpContext) {}
+  async edit({ params, view }: HttpContext) {
+    const { id } = params
+    const tweet = await Tweet.query().where('idTweet', params.id).preload('medias').firstOrFail()
+    return view.render('component/edite_tweet', { tweet })
+  }
 
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {}
+  async update({ params, request, response, session }: HttpContext) {
+    const { id } = params
+    const tweet = await Tweet.query().where('idTweet', id).preload('medias').firstOrFail()
+    const { content, slugImg } = await request.validateUsing(updatePostValidator)
+    let newFilePath: string | undefined
+    let currentMedia = tweet.medias.length > 0 ? tweet.medias[0] : null
+    try {
+      if (tweet.content !== content) {
+        tweet.merge({ content })
+        await tweet.save()
+      }
+
+      if (slugImg) {
+        if (currentMedia && currentMedia.url) {
+          const oldPath = app.makePath('public', currentMedia.url)
+          try {
+            await fs.access(oldPath) // Vérifie si le fichier existe
+            await fs.unlink(oldPath) // Supprime le fichier
+            console.log('Ancienne image supprimée :', oldPath)
+          } catch (deleteError) {
+            // Ignorer si le fichier n'existe déjà pas (ENOENT)
+            if (deleteError.code !== 'ENOENT') {
+              console.error("Erreur lors de la suppression de l'ancienne image :", deleteError)
+              // Décidez si vous voulez lancer l'erreur ou continuer. Pour l'instant, on log et on continue.
+            }
+          }
+        }
+        const newFileName = `${cuid()}.${slugImg.extname}`
+        newFilePath = `medias/${newFileName}` // Chemin relatif à 'public'
+        await slugImg.move(app.makePath('public/medias'), {
+          // Assurez-vous que le répertoire cible est public/medias
+          name: newFileName,
+        })
+        console.log('Nouvelle image téléchargée :', newFilePath)
+
+        if (currentMedia) {
+          currentMedia.url = newFilePath
+          await currentMedia.save()
+        } else {
+          await tweet.related('medias').create({
+            url: newFilePath,
+          })
+        }
+      }
+
+      await tweet.save()
+      session.flash('success', 'le tweet est à jour')
+      return response.redirect().toRoute('home')
+    } catch (error) {
+      console.error('Une erreur est survenu lors de la mise à jour du tweet', error)
+      session.flash('error', "le tweet n'est pas à jour vueiller reprendre")
+      return response.redirect().back()
+    }
+  }
 
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {}
+  async destroy({ params, session, response }: HttpContext) {
+    const { id } = params
+    const tweet = await Tweet.query().where('idTweet', id).preload('medias').firstOrFail()
+    try {
+      if (tweet.medias.length > 0) {
+        let oldImg = tweet.medias[0].url
+        if (oldImg) {
+          oldImg = oldImg.replace(/^public\//, '')
+          if (!oldImg.startsWith('medias/')) {
+            oldImg = `medias/${oldImg}`
+          }
+          const oldPath = app.makePath('public', oldImg)
+          console.log('DELETE PATH =', oldPath)
+          await fs.access(oldPath)
+          await fs.unlink(oldPath)
+        }
+      }
+      await tweet.delete()
+      session.flash('success', 'le tweet est supprimé')
+      return response.redirect().toRoute('home')
+    } catch (error) {
+      console.error('Une erreur est survenu lors de la mise à jour du tweet', error)
+      session.flash('error', "le tweet n'est pas à jour vueiller reprendre")
+      return response.redirect().back()
+    }
+  }
 }

@@ -16,6 +16,9 @@ export default class Like extends BaseModel {
   declare idTweet: number
 
   @column()
+  declare likesCount: number
+
+  @column()
   declare idCommentaire: number
 
   @column()

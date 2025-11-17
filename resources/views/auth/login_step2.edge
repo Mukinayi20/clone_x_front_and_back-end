@@ -9,7 +9,7 @@
                         <input type="email" style="width: 20rem;" class="form-control" id="floatingInputDisabled" placeholder="name@example.com" disabled>
                         <label for="floatingInputDisabled"> {{ user }} </label>
                     </div>
-                    @!component('component/input', { name: 'password', placeholder: 'password', label: 'password', cls: 'login_contenu_input_password' })
+                    @!component('component/input', { name: 'password', placeholder: 'password', label: 'password', cls: 'login_contenu_input_password', type: 'password' })
                     
                     <a href="{{ route('forgot.passeword') }}" style="text-align: start;">Mot de passe oublier</a>
                 </div>

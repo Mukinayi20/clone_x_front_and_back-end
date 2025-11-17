@@ -1,5 +1,48 @@
 <div id="postespage"  class="page">
-    <h1>
-        Posts profils nfjabfofoaan
-    </h1>
+    @each(tweet in tweets)
+    <div>
+        <div class="d-flex justify-content-between" style="padding-left: 1rem; padding-right: 1rem; padding-bottom: 1rem;">
+                <div class="d-flex align-items-center justify-content-between" style="width: 6.4rem;" >
+                    <img src="{{ tweet.user.photo_profil }}" alt="Profil" class="w-8 rounded-full object-cover"/>
+                    <p style="width: 15rem;">{{ tweet.user?.nom }} {{ tweet.user?.prenom }}</p>
+                </div>
+            <button class="btn_info" class="btn_fermer d-flex align-items-center">
+                <img style="width: 1rem; " src="/icones/points.png"></img>
+            </button>
+        </div>
+        <div>
+            {{ truncate(tweet?.content, 25) }}
+        </div>
+            @if(tweet.medias && tweet.medias?.length)
+                <div style="padding-left: 2rem;">
+                    @each(media in tweet.medias)
+                        <img class="rounded-4 object-cover" style="width:25rem; height: 23rem;" src="{{ media.url }}" alt="">
+                    @endeach
+                </div>
+            @endif
+        <div class="d-flex justify-content-around" style="padding: 1rem;">
+            <button>
+                <img class="icone-post" src="/public/icones/commenter.png" alt="Commenter">
+            </button>
+            <button>
+                <img class="icone-post" src="/public/icones/boucle.png" alt="retwitter">
+            </button>
+            <div class="tweet-actions">
+                <button type="button" class="like-btn" data-id="{{ tweet.id }}">
+                    @if(tweet.isLikedByUser)
+                        <img class="icone-post" src="/public/icones/coeur_plein.png" alt="aimé">
+                    @else
+                        <img class="icone-post" src="/public/icones/coeur.png" alt="liker">
+                    @endif
+                </button>
+                <span class="like-count">{{ tweet.likesCount }}</span>
+            </div>
+            <button>
+                <img class="icone-post" src="/public/icones/enregistrer-instagram.png" alt="signet">
+            </button>
+        </div> 
+    </div>
+    @include('component/profil_plus')
+@end
+
 </div>

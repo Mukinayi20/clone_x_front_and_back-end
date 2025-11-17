@@ -5,21 +5,17 @@
       <div class="d-flex flex-column align-items-center border border-info-dark border-top-0 rounded" style="gap: 2rem;">
         <div class="d-flex flex-column">
             @!component('component/nav_bar_home', { name: 'Accueil', id: 'btn-accueil', onclick: "loadPage('/accueil')"})
-            @!component('component/nav_bar_home', { name: 'Signet', id: 'btn-signet', onclick: "loadPage('/signet')" })
+            @!component('component/nav_bar_home', { name: 'Signet', id: 'signet-page', onclick: "loadPage('/signet')" })
             @!component('component/nav_bar_home', { name: 'Grok', id: 'btn-grok', onclick: "loadPage('/grok')" })
             @!component('component/nav_bar_home', { name: 'Profil', id: 'btn-profil', onclick: "loadPage('/profil')" })
         </div>
         <a href="{{ route('post.creat') }}" class="btn_nav_dark text-light"><button id="btn-post" type="button" ></button>Poster </button></a>
-        <button type="button" class="btn_nav_danger" data-bs-target="#staticBackdrop" data-bs-toggle="modal">Deconnexion</button>
-        @include('component/card_deconnexion')
+        <button type="button" class="btn_nav_danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Deconnexion</button>
       @!component('component/nav_bar_home', { name: 'Parametre', id: 'btn-parametre'})
       </div>
     </div>
     <div id="content" class="col border border-info-dark border-top-0 rounded" style="position:relative; margin-top: 0.5rem;">
-      //@include('layout/accueils/acceuil')
-      //@include('layout/signet')
-      //@include('layout/grok')
-      //@include('layout/profils/profil')
+      
     </div>
     <div class="col">
       <div class="container_section3">
@@ -41,11 +37,11 @@
 @include('component/parametre')
 @include('component/modifier_password')
 
+@include('component/card_deconnexion')
 @include('partials/footer')
 
 
 <script>
-  
 
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -59,17 +55,17 @@
       const btnFermerReset = document.getElementById('fermer-reset')
 
 
-      const btnAccueil = document.getElementById('btn-accueil')
-      const btnsignet = document.getElementById('btn-signet')
-      const BtnGrok = document.getElementById('btn-grok')
-      const BtnProfil = document.getElementById('btn-profil')
+      //const btnAccueil = document.getElementById('btn-accueil')
+      //const btnsignet = document.getElementById('btn-signet')
+      //const BtnGrok = document.getElementById('btn-grok')
+      //const BtnProfil = document.getElementById('btn-profil')
       const btnParametre = document.getElementById('btn-parametre')
       const btnPoste = document.getElementById('btn-post')
 
-      const pageAccueil = document.getElementById('page-accueil')
-      const pageGrok = document.getElementById('grok-page')
-      const pageSignet = document.getElementById('signet-page')
-      const pageprofil = document.getElementById('profil-page')
+      //const pageAccueil = document.getElementById('page-accueil')
+      //const pageGrok = document.getElementById('grok-page')
+      //const pageSignet = document.getElementById('signet-page')
+      //const pageprofil = document.getElementById('profil-page')
       const pageParametre = document.getElementById('open-modale-parametre')
 
       const btnFermer = document.getElementById('fermer-parametre')
@@ -92,19 +88,19 @@
         formulaireResetPassword.style.display = 'none'
       })
 
-      let currentPage = pageAccueil
-      currentPage.style.display = 'block'
+      //let currentPage = pageAccueil
+      //currentPage.style.display = 'block'
 
-      function openPage(page) {
+      /function openPage(page) {
           if(!page || page === currentPage) return
           currentPage.style.display = 'none'
           page.style.display = 'block'
           currentPage = page
       }
-      btnAccueil.addEventListener('click', () => openPage(pageAccueil))
-      btnsignet.addEventListener('click', () => openPage(pageSignet))
-      BtnGrok.addEventListener('click', () => openPage(pageGrok))
-      BtnProfil.addEventListener('click', () => openPage(pageprofil))
+      //btnAccueil.addEventListener('click', () => openPage(pageAccueil))
+      //btnsignet.addEventListener('click', () => openPage(pageSignet))
+      //BtnGrok.addEventListener('click', () => openPage(pageGrok))
+      //BtnProfil.addEventListener('click', () => openPage(pageprofil))
   })
 </script>
 

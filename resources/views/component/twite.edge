@@ -1,16 +1,24 @@
 @each(tweet in tweets)
     <div>
         <div class="d-flex justify-content-between" style="padding-left: 1rem; padding-right: 1rem; padding-bottom: 1rem;">
-                <div class="d-flex align-items-center justify-content-between" style="width: 6.4rem;" >
+                <div class="d-flex align-items-center justify-content-between" style="width: 6.4rem;">
                     <img src="{{ tweet.user.photo_profil }}" alt="Profil" class="w-8 rounded-full object-cover"/>
-                    <p style="width: 15rem;">{{ tweet.user?.nom }} {{ tweet.user?.prenom }}</p>
+                    <p style="width: 25rem;">{{ tweet.user?.nom }} {{ tweet.user?.prenom }}</p>
                 </div>
-            <button id="btn_info" class="btn_fermer d-flex align-items-center">
-                <img style="width: 1rem; " src="/icones/points.png"></img>
-            </button>
+            <div class="d-flex flex-row">
+                <a href="{{ route('post.edit', {id: tweet.idTweet}) }}" class="btn_fermer d-flex align-items-center">
+                    <img style="width: 1rem; " src="/icones/editer.png"/>
+                </a>
+                <form action="{{ route('post.delete', {id: tweet.idTweet}) }}?_method=DELETE" method="post">
+                    {{ csrfField() }}
+                    <button type="submit" class="btn_fermer d-flex align-items-center">
+                        <img style="width: 1.3rem;" src="/icones/supprimer.png" alt="">
+                    </button>
+                </form>
+            </div>
         </div>
         <div>
-            {{ truncate(tweet?.content, 25) }}
+            {{ truncate(tweet?.content, 50) }}
         </div>
             @if(tweet.medias && tweet.medias?.length)
                 <div style="padding-left: 2rem;">
@@ -26,37 +34,19 @@
             <button>
                 <img class="icone-post" src="/public/icones/boucle.png" alt="retwitter">
             </button>
-            <button type="button" id="likes">
-                <img class="icone-post" src="/public/icones/coeur.png" alt="liker">
-            </button>
+            <div class="tweet-actions">
+                <button type="button" class="like-btn" data-id="{{ tweet.id }}">
+                    @if(tweet.isLikedByUser)
+                        <img class="icone-post" src="/public/icones/coeur_plein.png" alt="aimé">
+                    @else
+                        <img class="icone-post" src="/public/icones/coeur.png" alt="liker">
+                    @endif
+                </button>
+                <span class="like-count">{{ tweet.likesCount }}</span>
+            </div>
             <button>
                 <img class="icone-post" src="/public/icones/enregistrer-instagram.png" alt="signet">
             </button>
         </div> 
     </div>
-    @include('component/profil_plus')
 @end
-<script>
-    const infoProfil = document.getElementById('content')
-    const content = document.getElementById('modal')
-    const btnInfo = document.getElementById('btn_info')
-
-
-
-    btnInfo.addEventListener('click', () => {
-        console.log('bonjour le mond')
-        content.style.display = 'block'
-    })
-
-    content.addEventListener('click', (event) => {
-        if(content.contains(event.target)){
-            console.log('Bonjour')
-            content.style.display = 'none'
-        }
-    })
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') content.style.display = 'none'
-    })
-    
-</script>

@@ -37,6 +37,7 @@ export default class Tweet extends BaseModel {
     localKey: 'idTweet',
   })
   declare likes: HasMany<typeof Media>
+  static merge: any
   // @hasMany(() => User, { foreignKey: 'idTweet' })
   // declare users: HasMany<typeof User>
   // static id_tweet: number | undefined
