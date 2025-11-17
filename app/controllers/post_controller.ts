@@ -217,7 +217,7 @@ export default class PostController {
     const { id } = params
     const tweet = await Tweet.query().where('idTweet', id).preload('medias').firstOrFail()
     if (await bouncer.denies(alterTweet, tweet)) {
-      session.flash('error', "Vous ne pouver pas modifier ce poste parce qu'il n'est pas à vous")
+      session.flash('error', "Vous ne pouver pas supprimer ce poste parce qu'il n'est pas à vous")
       return response.redirect().back()
     }
     try {

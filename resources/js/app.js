@@ -1,5 +1,3 @@
-import "unpoly/unpoly.css"
-import "unpoly/unpoly.js"
 document.addEventListener('DOMContentLoaded', function() {
   // const infoProfil = document.querySelectorAll('.content')
   // const content = document.querySelectorAll('.menu')
